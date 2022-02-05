@@ -103,23 +103,23 @@ function getDataFromApi ($apiUrl,$username, $password ){
 
      // echo "response is null <br>"; 
      // $response  = "NUll";
-       return  $response ;
+      // return  $response ;
      }
      else if ($response == "Access denied"){
       // echo "response is Access Denied <br>";
       //  $response  = "Access denied";
-       return  $response ;
+      // return  $response ;
     
       }
      else if ($response == ""){
       // echo "response is No data <br>";
       //  $response  = "No data";
-       return  $response ;
+      // return  $response ;
     
 
       }
 
-    //     echo "response :".gettype($response )."<br>"; 
+         echo "response :".gettype($response )."<br>"; 
  
     //  $responeLength =   strlen($response );
     //             echo strlen($responeLength  );
@@ -135,9 +135,9 @@ function getDataFromApi ($apiUrl,$username, $password ){
       $json = json_encode($XmlObject);          
       $array = json_decode($json,TRUE);
 
-      // echo " array type :".gettype($array) ;
-      //          echo " array length :".sizeof($array);
-      // echo"   <br>";  
+      echo " array type :".gettype($array) ;
+               echo " array length :".sizeof($array);
+      echo"   <br>";  
        
 
       //echo  "row : ".$row;

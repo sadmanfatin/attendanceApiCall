@@ -35,52 +35,127 @@ date_default_timezone_set("Asia/Dhaka");
    
 
     curl_setopt($client, CURLOPT_URL, $apiUrl);
+   // curl_setopt($client, CURLOPT_HEADER, 1 );
 
             // //Specify the username and password using the CURLOPT_USERPWD option.
       curl_setopt($client, CURLOPT_USERPWD, $username . ":" . $password);       
-     curl_setopt($client, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+      curl_setopt($client, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
         curl_setopt($client, CURLOPT_POST, 1);
-
+         
          curl_setopt($client, CURLOPT_POSTFIELDS, $post);
 
 
       // //Tell cURL to return the output as a string instead
       // //of dumping it to the browser.
-        curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
+       curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
           //  curl_setopt($client, CURLOPT_TIMEOUT, 15);
        
 
         $response = curl_exec($client);
                
-      // curl_close($client);
-        echo "response :".$response ." length : ".strlen($response)."<br>"; 
+      
+      //  echo "response :".$response ." length : ".strlen($response)."<br>"; 
         
 
-         curl_close($client);
+       
+ curl_close($client);
          
- //          print_r($response);
- //       echo "<br>";
- // printf($response);
- //  echo "<br>";    
- // print($response);
-   //      //  echo "<br>"; 
-   //   if($response == null){
+        
+     // if($response == null){
 
-   //   // echo "response is null <br>"; 
-   //   // $response  = "NUll";
-   //   //  return  $response ;
-   //   }
-   //   else if ($response == "Access denied"){
-   //    // echo "response is Access Denied <br>";
-   //    //  $response  = "Access denied";
-   //  //   return  $response ;
+     // echo "response is null <br>"; 
+     // $response  = "NUll";
+     //   return  $response ;
+     // }
+     // else if ($response == "Access denied"){
+     //  echo "response is Access Denied <br>";
+     //   $response  = "Access denied";
+     //   return  $response ;
     
-   //    }
-   //   else if ($response == ""){
-   //    // echo "response is No data <br>";
-   //    //  $response  = "No data";
-   //  //   return  $response ;
+     //  }
+     // else if ($response == ""){
+     //  echo "response is No data <br>";
+     //   $response  = "No data";
+     //   return  $response ;
+    
 
+     //  }
+
+
+       
+      $array = json_decode($response,TRUE);
+
+ //echo "</br>";
+//print_r($array);
+// echo "<br>";
+
+  if (isset($array['AcsEvent'])) {
+
+      // print_r($array);
+      //  echo "<br>";
+
+    //  $successCount++;
+      // echo "Success Count :" . $successCount . "<br>";
+
+      $AcsEventArray = $array['AcsEvent'];
+
+      // echo "--------------  row";
+      // echo "<br>";
+      // print_r($row);
+          $InfoListArray = $AcsEventArray['InfoList'];
+
+           print_r( $InfoListArray);
+
+      // if (isset($AcsEvent['Timestamp'])) {
+      //    // if row has no array, it itself an associative array of Timestamp, value ,seq
+      //    // echo "in (isset (row['Timestamp'] )";
+      //    //echo "<br>";
+
+      //    $InfoList = $row['InfoList'];
+      //    $value = $row['Value'];
+      //    $sequence = $row['Seq'];
+      //    $status = "";
+      //    // echo $date . "<br>";
+      //    // echo $Timestamp;
+      //    //  $delayMinutes =  date_diff(  strtotime($date) ,$Timestamp)    ;
+      //    $delayMinutes = $delay;
+
+      //    if ($Timestamp > date('yy-m-d H:i:s', strtotime($date))) {
+      //       // if ($sequence > $lastSeqNo) {
+      //       // echo $sequence;
+      //     //  insertApiDataIntoTrendLogTable($meterId, $Timestamp, $value, $sequence, $delayMinutes, $status);
+      //    }
+      // } else if (!isset($row['Timestamp'])) {
+
+      //    // echo " in ( !!! isset (row['Timestamp'] )" . "<br>";
+      //    //  $row contains array of multiple Timestamp, value , sequence
+
+         foreach ($InfoListArray as $InfoList) {
+     // echo "<\br>";
+            $time = $InfoList['time'];
+            $serial = $InfoList['serialNo'];
+            $verification = $InfoList['currentVerifyMode'];
+              $employeeNo = $year = isset($InfoList['employeeNoString']) ? $InfoList['employeeNoString'] : null;   
+            //  $delayMinutes = date_diff( strtotime($date),$Timestamp);
+             
+echo "time: ".$time."  serial: ".$serial." verification : ".$verification." employee no : ".$employeeNo."\n";
+//echo "</br>";  
+            // echo $date . '-' . "<br>";
+            // echo $Timestamp . "<br>";
+
+            // if (date('yy-m-d H:i:s', strtotime($Timestamp)) > date('yy-m-d H:i:s', strtotime($date))) {
+            //    // if ($sequence > $lastSeqNo) {
+            //    // echo $sequence;
+
+            //  //  insertApiDataIntoTrendLogTable($meterId, $Timestamp, $value, $sequence, $delayMinutes, $status);
+            // }
+            // //   echo "time : ".$Timestamp."Value : ".$value." Sequence : ".$sequence."<br>";
+
+         }
+      // }
+      // echo "==========================================================================================================================="."<br>" ;         
+
+   } 
 
 
 oci_close($dbConn);
