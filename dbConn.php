@@ -1,9 +1,9 @@
 <?php 
-	$dbhost = "163.47.147.74";    //host 163.47.147.74-(realip)   //192.168.5.248 (local ip)
+	$dbhost = "192.168.200.102";   
 	$dbport= "1521";          //port default is 1521 
-	$servicename = "CWPL";        //name of database  
-	$dbuser = "PRODUCTION";      //db user with all <priviliges></priviliges>
-	$dbpassword = "123";    // password of user
+	$servicename = "ebsdb";        //name of database  
+	$dbuser = "apps";      //db user with all <priviliges></priviliges>
+	$dbpassword = "apps";    // password of user
 	$dbConnString = 
 			"(DESCRIPTION =
 				(ADDRESS_LIST =
