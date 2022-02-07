@@ -28,21 +28,21 @@ while(true){
              
               foreach ($InfoListArray as $InfoList) {
                           // echo "<\br>";
-                          $time = $InfoList['time'];
-                          $serial = $InfoList['serialNo'];
-                          $verification = $InfoList['currentVerifyMode'];
-                          $empNo = $year = isset($InfoList['employeeNoString']) ? $InfoList['employeeNoString'] : null;   
-                           
+                      $time = $InfoList['time'];
+                      $serial = $InfoList['serialNo'];
+                      $verification = $InfoList['currentVerifyMode'];
+                      $empNo =  isset($InfoList['employeeNoString']) ? $InfoList['employeeNoString'] : null;   
+                       
 
-                          echo "time: ".$time."  serial: ".$serial." verification : ".$verification." employee no : ".$empNo."\n";
-                           echo "<br>";  
+                      echo "time: ".$time."  serial: ".$serial." verification : ".$verification." employee no : ".$empNo."\n";
+                       echo "<br>";  
 
-                           if ($empNo != null){
-                              insertApiDataIntoTable($empNo, $time, $inOutType, $ipAddress);
-                           }
+                       if ($empNo != null){
+                          insertApiDataIntoTable($empNo, $time, $inOutType, $ipAddress);
+                       }
                                         
 
-                       }
+                 }
           }
 
 }
