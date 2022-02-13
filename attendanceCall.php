@@ -30,6 +30,9 @@ while (true){
           
           if ($InfoListArray != "No Data") { // if InfoList array is not set then for loop will give error
 
+     //       if (is_array($InfoListArray) || is_object($InfoListArray))
+     //       {
+
               foreach ($InfoListArray as $InfoList) {
                       // echo "<\br>";
                       $time = $InfoList['time'];
@@ -44,6 +47,7 @@ while (true){
                        if ($empNo != null){
                           insertApiDataIntoTable($empNo, $time, $inOutType, $ipAddress);
                        }
+          //    }
                                     
 
             }
