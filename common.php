@@ -63,7 +63,8 @@ function getDataFromApi ($apiUrl, $startTime, $endTime ){
      $response = curl_exec($client);
 
       curl_close($client);
-                     
+       
+      $respLength = strlen($response) ;      
     // echo "response :".$response ." length : ".strlen($respLength)."<br>"; 
               
     if($respLength == 0){
