@@ -64,8 +64,12 @@ function getDataFromApi ($apiUrl, $startTime, $endTime ){
 
       curl_close($client);
                      
-   //echo "response :".$response ." length : ".strlen($response)."<br>"; 
-               
+    // echo "response :".$response ." length : ".strlen($respLength)."<br>"; 
+              
+    if($respLength == 0){
+       return "No data";
+    }
+
   //converts json string to array      
    $array = json_decode($response,TRUE);
 
@@ -106,9 +110,11 @@ function getDataFromApi ($apiUrl, $startTime, $endTime ){
 
 
 function  insertApiDataIntoTable($empNo, $inOutTime, $inOutType, $ipAddress){
+
+    $simpleTime =  date('Y-m-d H:i:s', strtotime($inOutTime));
     
-  $query = "INSERT INTO  XX_ATTLOG_HIK (AM_EMPNO, AM_TIME_IN_OUT ,AM_TYPE_IN_OUT , AM_MAC_ID  ) 
-                   VALUES ('$empNo' ,  '$inOutTime' , '$inOutType', '$ipAddress' )";
+  $query = "INSERT INTO  XX_ATTLOG_HIK (AM_EMPNO, AM_TIME_IN_OUT ,AM_TYPE_IN_OUT , AM_MAC_ID , AM_TIME_IN_OUT_SIMPLE  ) 
+                   VALUES ('$empNo' ,  '$inOutTime' , '$inOutType', '$ipAddress',  TO_DATE ('$simpleTime', 'YYYY-MM-DD HH24:MI:SS') )";
 
            //  echo "query : ".$query."<br>";
               
