@@ -1,0 +1,13 @@
+========================================================================================================================================================
+XX_ATT_API
+XX_ATTLOG_HIK
+XX_ATTLOG_HIK_TEST
+
+========================================================================================================================================================
+difference is seconds of creation date and in out time
+
+select am_empno, am_time_in_out, creation_date,   AM_TIME_IN_OUT_SIMPLE+(6/24) , (creation_date - (AM_TIME_IN_OUT_SIMPLE+(6/24)) )*86400  SECOND_DIFF 
+from xx_attlog_hik 
+where AM_MAC_ID = :p_mac_id
+and trunc ( AM_TIME_IN_OUT_SIMPLE) =:p_date
+and am_empno = :p_emp_no
