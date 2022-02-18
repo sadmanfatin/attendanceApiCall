@@ -2,6 +2,7 @@
 include 'dbConn.php';
 include 'common.php';
 set_time_limit(0);
+$terminalLastEntryArray = array();
 
 //  $terminals = getTerminals(); // all terminal entry from database
 while (true){
@@ -15,6 +16,18 @@ while (true){
        $inOutType = $terminal['IN_OUT'];
        //echo $meterId."".$meterUrl."<br>";
        $startTime = $terminal ['MAX_TIME'];
+
+
+        if (! isset  ($terminalLastEntryArray[$ipAddress]) ){
+            
+             $startTime = $terminal ['MAX_TIME']; 
+
+           }
+           else {
+             
+             $startTime = $terminalLastEntryArray[$ipAddress];
+
+           }
 
        //$startTime = date("Y-m-d" , strtotime("-10 day")).'T00:00:00+06:00';
        $endTime = date("Y-m-d" , strtotime("+1 day")).'T00:00:00+06:00';
@@ -40,6 +53,8 @@ while (true){
                         $verification = $InfoList['currentVerifyMode'];
                         $empNo = isset($InfoList['employeeNoString']) ? $InfoList['employeeNoString'] : null;   
                          
+                         $terminalLastEntryArray[$ipAddress] =  $time ; 
+
                         // echo "time: ".$time."  serial: ".$serial." verification : ".$verification." employee no : ".$empNo."\n";
                         //  echo "<br>";                      
 
