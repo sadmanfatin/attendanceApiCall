@@ -51,9 +51,12 @@ while (true){
                         $time = $InfoList['time'];
                         $serial = $InfoList['serialNo'];
                         $verification = $InfoList['currentVerifyMode'];
-                        $empNo = isset($InfoList['employeeNoString']) ? $InfoList['employeeNoString'] : null;   
+                        $empNo = isset($InfoList['employeeNoString']) ? $InfoList['employeeNoString'] : null; 
+
+                        $newStartTime =  date('Y-m-d\TH:i:sP', strtotime( $time."+1 second"));
+
                          
-                         $terminalLastEntryArray[$ipAddress] =  $time ; 
+                        $terminalLastEntryArray[$ipAddress] =  $newStartTime ; 
 
                         // echo "time: ".$time."  serial: ".$serial." verification : ".$verification." employee no : ".$empNo."\n";
                         //  echo "<br>";                      
