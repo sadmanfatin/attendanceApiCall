@@ -1,0 +1,21 @@
+=================================================================
+server info
+================================================================
+Server: 192.168.1.151
+User: attendance
+Pass: tuDXTCG2xI
+
+FTP Location: /web/attendance.mj-group.com/public_html/attendanceApiCall
+
+path : /home/attendance/web/attendance.mj-group.com/public_html/attendanceApiCall
+
+kill process:
+========================
+kill -9 Proc_ID
+
+
+start script: 
+===============================
+cd  /home/attendance/web/attendance.mj-group.com/public_html/attendanceApiCall
+/usr/bin/php attendanceCall.php &
+
