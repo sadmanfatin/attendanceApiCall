@@ -11,3 +11,6 @@ from xx_attlog_hik
 where AM_MAC_ID = :p_mac_id
 and trunc ( AM_TIME_IN_OUT_SIMPLE) =:p_date
 and am_empno = :p_emp_no
+
+========================================================================================================================================================
+delete from xx_attlog_hik where  creation_date >  to_date('02/18/2022 14:08:13', 'mm/dd/yyyy hh24:mi:ss' )
