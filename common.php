@@ -76,7 +76,9 @@ function getDataFromApi ($apiUrl, $startTime, $endTime ){
      //of dumping it to the browser.
      curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
      //  curl_setopt($client, CURLOPT_TIMEOUT, 15);
-         
+
+    curl_setopt($client, CURLOPT_CONNECTTIMEOUT, 5);  
+
      $response = curl_exec($client);
 
       curl_close($client);
