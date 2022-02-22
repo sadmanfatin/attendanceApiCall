@@ -19,5 +19,6 @@ kill -9 Proc_ID
 start script: 
 ===========================================================
 cd  /home/attendance/web/attendance.mj-group.com/public_html/attendanceApiCall
-/usr/bin/php attendanceCall.php &
 
+
+nohup /usr/bin/php attendanceCall.php &
