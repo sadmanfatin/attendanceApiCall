@@ -56,13 +56,17 @@ while (true){
                         $newStartTime =  date('Y-m-d\TH:i:sP', strtotime( $time."+1 second"));
 
                          
-                        $terminalLastEntryArray[$ipAddress] =  $newStartTime ; 
+                       // $terminalLastEntryArray[$ipAddress] =  $newStartTime ; 
+
+                        $terminalLastEntryArray[$ipAddress] =   $time; 
 
                         // echo "time: ".$time."  serial: ".$serial." verification : ".$verification." employee no : ".$empNo."\n";
                         //  echo "<br>";                      
 
-                         if ($empNo != null){
+                         if ($empNo != null  && $empNo != $lastEmpNo ){
                             insertApiDataIntoTable($empNo, $time, $inOutType, $ipAddress);
+
+                            $lastEmpNo = $empNo; 
                          }
                 }
                                       
