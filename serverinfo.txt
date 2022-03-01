@@ -22,3 +22,9 @@ cd  /home/attendance/web/attendance.mj-group.com/public_html/attendanceApiCall
 
 
 nohup /usr/bin/php attendanceCall.php &
+
+
+===========================================================
+
+localhost/attendanceApiCall/attendanceCall.php
+localhost/attendanceApiCall/attendanceCallForDay.php
