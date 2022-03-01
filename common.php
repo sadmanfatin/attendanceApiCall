@@ -1,13 +1,16 @@
 <?php 
  include_once 'dbConn.php';
+$attendanceLogTable = "XX_ATTLOG_HIK" ;   
 
+ //$client = curl_init();
 //the username and password of the api
 
 function getTerminals(){
-
+ 
+ global $attendanceLogTable ;
 
  $query ="SELECT  T.ID, T.IP_ADDRESS , T.IN_OUT, T.API_STRING, T.LOCATION , 
-  (SELECT  nvl (  MAX(to_char(to_date(am_time_in_out,'yyyy-mm-dd\"T\"hh24:mi:ss\"+06:00\"')++(1/24/60/60),'yyyy-mm-dd\"T\"hh24:mi:ss\"+06:00\"')), TO_CHAR (sysdate-10 , 'yyyy-mm-dd')||'T00:00:00+06:00' )    FROM  XX_ATTLOG_HIK HIK WHERE HIK.AM_MAC_ID =  T.IP_ADDRESS)    MAX_TIME
+  (SELECT  nvl (  MAX(to_char(to_date(am_time_in_out,'yyyy-mm-dd\"T\"hh24:mi:ss\"+06:00\"')++(1/24/60/60),'yyyy-mm-dd\"T\"hh24:mi:ss\"+06:00\"')), TO_CHAR (sysdate-10 , 'yyyy-mm-dd')||'T00:00:00+06:00' )    FROM  $attendanceLogTable HIK WHERE HIK.AM_MAC_ID =  T.IP_ADDRESS)    MAX_TIME
  FROM XX_ATT_API T WHERE T.STATUS = 1";
 
 $result = getData($query);
@@ -22,9 +25,10 @@ $result = getData($query);
 
 function getTerminalWithId($terminalId){
 
+   global $attendanceLogTable ;
 
  $query ="SELECT  T.ID, T.IP_ADDRESS , T.IN_OUT, T.API_STRING, T.LOCATION , 
-  (SELECT  nvl (  MAX(to_char(to_date(am_time_in_out,'yyyy-mm-dd\"T\"hh24:mi:ss\"+06:00\"')++(1/24/60/60),'yyyy-mm-dd\"T\"hh24:mi:ss\"+06:00\"')), TO_CHAR (sysdate-10 , 'yyyy-mm-dd')||'T00:00:00+06:00' )    FROM  XX_ATTLOG_HIK HIK WHERE HIK.AM_MAC_ID =  T.IP_ADDRESS)    MAX_TIME
+  (SELECT  nvl (  MAX(to_char(to_date(am_time_in_out,'yyyy-mm-dd\"T\"hh24:mi:ss\"+06:00\"')++(1/24/60/60),'yyyy-mm-dd\"T\"hh24:mi:ss\"+06:00\"')), TO_CHAR (sysdate-10 , 'yyyy-mm-dd')||'T00:00:00+06:00' )    FROM  $attendanceLogTable HIK WHERE HIK.AM_MAC_ID =  T.IP_ADDRESS)    MAX_TIME
  FROM XX_ATT_API T WHERE T.STATUS = 1 and T.ID = $terminalId ";
 
 $result = getData($query);
@@ -132,8 +136,10 @@ function getDataFromApi ($apiUrl, $startTime, $endTime ){
 function  insertApiDataIntoTable($empNo, $inOutTime, $inOutType, $ipAddress){
 
     $simpleTime =  date('Y-m-d H:i:s', strtotime($inOutTime));
+
+     global $attendanceLogTable ;
     
-  $query = "INSERT INTO  XX_ATTLOG_HIK (AM_EMPNO, AM_TIME_IN_OUT ,AM_TYPE_IN_OUT , AM_MAC_ID , AM_TIME_IN_OUT_SIMPLE  ) 
+  $query = "INSERT INTO  $attendanceLogTable (AM_EMPNO, AM_TIME_IN_OUT ,AM_TYPE_IN_OUT , AM_MAC_ID , AM_TIME_IN_OUT_SIMPLE  ) 
                    VALUES ('$empNo' ,  '$inOutTime' , '$inOutType', '$ipAddress',  TO_DATE ('$simpleTime', 'YYYY-MM-DD HH24:MI:SS') )";
 
            //  echo "query : ".$query."<br>";
@@ -151,10 +157,12 @@ function  insertApiDataIntoTable($empNo, $inOutTime, $inOutType, $ipAddress){
 function  insertApiDataIntoTableUniquely($empNo, $inOutTime, $inOutType, $ipAddress){
 
     $simpleTime =  date('Y-m-d H:i:s', strtotime($inOutTime));
+
+    global $attendanceLogTable ;
     
-    $query = "INSERT INTO  XX_ATTLOG_HIK (AM_EMPNO, AM_TIME_IN_OUT ,AM_TYPE_IN_OUT , AM_MAC_ID , AM_TIME_IN_OUT_SIMPLE  )
+    $query = "INSERT INTO  $attendanceLogTable (AM_EMPNO, AM_TIME_IN_OUT ,AM_TYPE_IN_OUT , AM_MAC_ID , AM_TIME_IN_OUT_SIMPLE  )
              SELECT  '$empNo' ,  '$inOutTime' , '$inOutType', '$ipAddress',  TO_DATE ('$simpleTime', 'YYYY-MM-DD HH24:MI:SS')
-             FROM DUAL WHERE NOT  EXISTS (SELECT * FROM XX_ATTLOG_HIK H  WHERE H.AM_EMPNO  =  '$empNo' AND H.AM_TIME_IN_OUT = '$inOutTime' )";
+             FROM DUAL WHERE NOT  EXISTS (SELECT * FROM $attendanceLogTable H  WHERE H.AM_EMPNO  =  '$empNo' AND H.AM_TIME_IN_OUT = '$inOutTime' )";
 
            //  echo "query : ".$query."<br>";
               
