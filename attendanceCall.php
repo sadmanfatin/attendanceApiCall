@@ -63,10 +63,10 @@ while (true){
                         // echo "time: ".$time."  serial: ".$serial." verification : ".$verification." employee no : ".$empNo."\n";
                         //  echo "<br>";                      
 
-                         if ($empNo != null  && $empNo != $lastEmpNo ){
+                         if ($empNo != null ){
                             insertApiDataIntoTable($empNo, $time, $inOutType, $ipAddress);
 
-                            $lastEmpNo = $empNo; 
+                            
                          }
                 }
                                       
