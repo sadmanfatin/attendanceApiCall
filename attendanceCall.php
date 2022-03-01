@@ -53,10 +53,8 @@ while (true){
                         $verification = $InfoList['currentVerifyMode'];
                         $empNo = isset($InfoList['employeeNoString']) ? $InfoList['employeeNoString'] : null; 
 
-                        $newStartTime =  date('Y-m-d\TH:i:sP', strtotime( $time."+1 second"));
+//                        $newStartTime =  date('Y-m-d\TH:i:sP', strtotime( $time."+1 second"));
 
-                         
-                       // $terminalLastEntryArray[$ipAddress] =  $newStartTime ; 
 
                         $terminalLastEntryArray[$ipAddress] =   $time; 
 
