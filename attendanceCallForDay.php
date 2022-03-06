@@ -2,16 +2,16 @@
 include 'dbConn.php';
 include 'common.php';
 set_time_limit(0);
-$terminalLastEntryArray = array();
-
+$terminalLastEntryTimeArray = array();
+$terminalLastEntrySerialArray = array();
 
 /// =========================================== values of day and terminal to run script ===========================================================
 
-$startDate = "2022-02-16"; 
-$endDate = "2022-02-20"; 
+$startDate = "2022-03-01"; 
+$endDate = "2022-03-06"; 
 
 $terminals = getTerminals();        // all terminal entry from database
-//$terminals = getTerminalWithId(6);    //  specific terminal entry from database
+$terminals = getTerminalWithId(6);    //  specific terminal entry from database
 
 /// ============================================================================================================================
 
@@ -60,17 +60,42 @@ $terminals = getTerminals();        // all terminal entry from database
 
                             $newStartTime =  date('Y-m-d\TH:i:sP', strtotime( $time."+1 second"));
                            
-                             $startTime = $newStartTime;
-                           // $terminalLastEntryArray[$ipAddress] =  $newStartTime ; 
+                            // $startTime = $newStartTime;
+                           // $terminalLastEntryTimeArray[$ipAddress] =  $newStartTime ; 
 
+                             $startTime =$time;
                              // echo "time: ".$time."  serial: ".$serial." verification : ".$verification." employee no : ".$empNo."\n";
-                             // echo "<br>";                      
+                             // echo "<br>";   
 
-                             if ($empNo != null){                            
-                                  
+                                if (! isset  ($terminalLastEntrySerialArray[$ipAddress]) ){                                 
+                                   $lastSerial = -1; 
+                                 }
+                                 else {                                   
+                                   $lastSerial = $terminalLastEntrySerialArray[$ipAddress];
+                                 }
+       
+
+                              // echo  "LastSerial: ".$lastSerial." serial: ".$serial;
+                              //  echo "<br>";
+                                     
+
+                             if ($empNo != null && $serial > $lastSerial ){ 
+                                                        
+     
                                 insertApiDataIntoTableUniquely($empNo, $time, $inOutType, $ipAddress);
                             
                              }
+
+                            if ( $serial > $lastSerial ){
+
+                                 // echo  " insert data ";
+                                 //   echo "<br>"; 
+
+
+                                  $terminalLastEntrySerialArray[$ipAddress] =   $serial;  
+
+                                 
+                              } 
                     }
                                           
 

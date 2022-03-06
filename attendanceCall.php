@@ -19,16 +19,12 @@ while (true){
        $startTime = $terminal ['MAX_TIME'];
 
 
-        if (! isset  ($terminalLastEntryTimeArray[$ipAddress]) ){
-            
-             $startTime = $terminal ['MAX_TIME']; 
-
-           }
-           else {
-             
-             $startTime = $terminalLastEntryTimeArray[$ipAddress];
-
-           }
+      if (! isset  ($terminalLastEntryTimeArray[$ipAddress]) ){            
+          $startTime = $terminal ['MAX_TIME']; 
+      }
+      else {             
+          $startTime = $terminalLastEntryTimeArray[$ipAddress];
+      }
 
        //$startTime = date("Y-m-d" , strtotime("-10 day")).'T00:00:00+06:00';
        $endTime = date("Y-m-d" , strtotime("+1 day")).'T00:00:00+06:00';
@@ -38,7 +34,7 @@ while (true){
           //  echo "========  Terminal info  ========="."<br>";
       
 
-           $InfoListArray  = getDataFromApi($terminalUrl, $startTime  , $endTime  );
+          $InfoListArray  = getDataFromApi($terminalUrl, $startTime  , $endTime  );
              
           
           if ($InfoListArray != "No Data") { // if InfoList array is not set then for loop will give error
@@ -53,30 +49,31 @@ while (true){
                         $verification = $InfoList['currentVerifyMode'];
                         $empNo = isset($InfoList['employeeNoString']) ? $InfoList['employeeNoString'] : null; 
 
-//                        $newStartTime =  date('Y-m-d\TH:i:sP', strtotime( $time."+1 second"));
+//                       $newStartTime =  date('Y-m-d\TH:i:sP', strtotime( $time."+1 second"));
 
                         $terminalLastEntryTimeArray[$ipAddress] =   $time;                          
 
                         // echo "time: ".$time."  serial: ".$serial." verification : ".$verification." employee no : ".$empNo."\n";
                         //  echo "<br>";      
                              
-                              if (! isset  ($terminalLastEntrySerialArray[$ipAddress]) ){                                 
-                                   $lastSerial = -1; 
-                                 }
-                                 else {                                   
-                                   $lastSerial = $terminalLastEntrySerialArray[$ipAddress];
-                                 }     
+                        if (! isset  ($terminalLastEntrySerialArray[$ipAddress]) ){                                 
+                             $lastSerial = -1; 
+                        }                         
+                        else {                                   
+                            $lastSerial = $terminalLastEntrySerialArray[$ipAddress];
+                        }     
 
                               // echo  "LastSerial: ".$lastSerial." serial: ".$serial;
                               //  echo "<br>"; 
        
-                         if ($empNo != null and $serial > $lastSerial ){
+                        if ($empNo != null and $serial > $lastSerial ){
                             insertApiDataIntoTable($empNo, $time, $inOutType, $ipAddress);                           
-                         }
+                        }
 
-                         $terminalLastEntrySerialArray[$ipAddress] =   $serial;  
-
-                }                                     
+                        if ( $serial > $lastSerial ){
+                             $terminalLastEntrySerialArray[$ipAddress] =   $serial;                               
+                        }
+                                                                }                                     
 
               }          
           }
