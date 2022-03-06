@@ -2,12 +2,13 @@
 include 'dbConn.php';
 include 'common.php';
 set_time_limit(0);
-$terminalLastEntryArray = array();
+$terminalLastEntryTimeArray = array();
+$terminalLastEntrySerialArray = array();
 
 //  $terminals = getTerminals(); // all terminal entry from database
 while (true){
     $terminals = getTerminals(); 
-
+ // $terminals = getTerminalWithId(6); 
     foreach ($terminals as $terminal) {
      
        $terminalId =  $terminal['ID'];
@@ -18,14 +19,14 @@ while (true){
        $startTime = $terminal ['MAX_TIME'];
 
 
-        if (! isset  ($terminalLastEntryArray[$ipAddress]) ){
+        if (! isset  ($terminalLastEntryTimeArray[$ipAddress]) ){
             
              $startTime = $terminal ['MAX_TIME']; 
 
            }
            else {
              
-             $startTime = $terminalLastEntryArray[$ipAddress];
+             $startTime = $terminalLastEntryTimeArray[$ipAddress];
 
            }
 
@@ -39,7 +40,6 @@ while (true){
 
            $InfoListArray  = getDataFromApi($terminalUrl, $startTime  , $endTime  );
              
-
           
           if ($InfoListArray != "No Data") { // if InfoList array is not set then for loop will give error
 
@@ -55,31 +55,37 @@ while (true){
 
 //                        $newStartTime =  date('Y-m-d\TH:i:sP', strtotime( $time."+1 second"));
 
-
-                        $terminalLastEntryArray[$ipAddress] =   $time; 
+                        $terminalLastEntryTimeArray[$ipAddress] =   $time;                          
 
                         // echo "time: ".$time."  serial: ".$serial." verification : ".$verification." employee no : ".$empNo."\n";
-                        //  echo "<br>";                      
+                        //  echo "<br>";      
+                             
+                              if (! isset  ($terminalLastEntrySerialArray[$ipAddress]) ){                                 
+                                   $lastSerial = -1; 
+                                 }
+                                 else {                                   
+                                   $lastSerial = $terminalLastEntrySerialArray[$ipAddress];
+                                 }     
 
-                         if ($empNo != null ){
-                            insertApiDataIntoTable($empNo, $time, $inOutType, $ipAddress);
-
-                            
+                              // echo  "LastSerial: ".$lastSerial." serial: ".$serial;
+                              //  echo "<br>"; 
+       
+                         if ($empNo != null and $serial > $lastSerial ){
+                            insertApiDataIntoTable($empNo, $time, $inOutType, $ipAddress);                           
                          }
-                }
-                                      
 
-              }
-            
+                         $terminalLastEntrySerialArray[$ipAddress] =   $serial;  
+
+                }                                     
+
+              }          
           }
-
           
         }
 
 }
 
  //$apiUrl="http://192.168.1.64/ISAPI/AccessControl/AcsEvent?format=json";
-
 
 oci_close($dbConn);
 
