@@ -1,6 +1,11 @@
 <?php 
 include 'dbConn.php';
 include 'common.php';
+
+$scriptStartTime = date("Y-m-d H:m:s");
+echo "script last started at ".$scriptStartTime;
+echo "<br>";
+
 set_time_limit(0);
 $terminalLastEntryTimeArray = array();
 $terminalLastEntrySerialArray = array();
