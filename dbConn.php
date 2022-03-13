@@ -15,34 +15,49 @@
 	  		)";    // connection string for this we must create TNS entry for Oracle
 
 
-     $dbConn = oci_connect($dbuser,$dbpassword,$dbConnString);
-	if(!$dbConn ){
-	$err = oci_error();
-	trigger_error('Could not establish a connection: ' . $err['message'], E_USER_ERROR);
-	}
+ //     $dbConn = oci_connect($dbuser,$dbpassword,$dbConnString);
+	// if(!$dbConn ){
+	// $err = oci_error();
+	// trigger_error('Could not establish a connection: ' . $err['message'], E_USER_ERROR);
+	// }
 	// else{
 	// 	echo 'Successfully Connected to Oracle Database';
 	// }
     
 
 function insertData( $query){
-     global $dbConn;
+   global $dbuser;
+   global $dbpassword;
+   global $dbConnString;
+   global  $dbConn;
+   global $dbConn;
+
+  $dbConn = oci_connect( $dbuser, $dbpassword, $dbConnString) or die("db connection failed : ".date("Y-m-d H:m:s"));
+     
     $stmt = oci_parse( $dbConn, $query);
         
 
-                    try{
-                        oci_execute($stmt);
-                    }
-                    catch(Exception $e){
-                      "exception occured whie executing query";
-                    }
+    try{
+        oci_execute($stmt);
+    }
+    catch(Exception $e){
+      "exception occured whie executing query";
+    }
    
   // oci_commit($dbConn);
 }
 
 
 function  getData( $query){
-	global $dbConn;
+   global $dbuser;
+   global $dbpassword;
+   global $dbConnString;
+   global  $dbConn;
+   global $dbConn;
+
+
+  $dbConn = oci_connect( $dbuser, $dbpassword, $dbConnString) or die("db connection failed :".date("Y-m-d H:m:s"));
+
      $stmt = oci_parse( $dbConn, $query);
       oci_execute($stmt);
     return  $stmt;
