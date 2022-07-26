@@ -10,18 +10,16 @@ FTP Location: /web/attendance.mj-group.com/public_html/attendanceApiCall
 path : /home/attendance/web/attendance.mj-group.com/public_html/attendanceApiCall
 
 kill process:
-===========================================================
+==========================================================================
 ps -aux | grep attendanceCall.php
 
 kill -9 Proc_ID
 
 
-start script: 
-===========================================================
-cd  /home/attendance/web/attendance.mj-group.com/public_html/attendanceApiCall
-
-
-nohup /usr/bin/php attendanceCall.php &
+Scheduled helping scripts: 
+===========================================================================
+/home/attendance/checkscript.sh
+/home/attendance/runscript.sh
 
 
 ===========================================================
